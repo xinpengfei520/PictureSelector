@@ -463,9 +463,21 @@ PictureSelector.create(MainActivity.this).externalPictureVideo(video_path);
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 ```
-## 打赏
-# ~如果您觉得好，对你有帮助，可以给我一点打赏当做鼓励，蚊子再小也是肉呀(*^__^*) 嘻嘻…… 
-![image](https://github.com/LuckSiege/PictureSelector/blob/master/image/apply.png)
+
+## 获取Uri
+
+```
+	List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                for (int i = 0; i < selectList.size(); i++) {
+                    String path = selectList.get(i).getPath();
+                    LogUtil.iLogger(TAG, "path" + i + "===" + path);
+                    Uri picUri = Uri.parse("file:///" + path);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        picUri = FileProvider.getUriForFile(getContext(), AppApplication
+                                .getContextObject().getPackageName() + ".fileprovider", new File(picUri.getPath()));
+                    }
+				}
+```
 
 ## 兼容性测试
 ******腾讯优测-深度测试-通过率达到100%******
